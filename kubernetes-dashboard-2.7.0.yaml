@@ -40,10 +40,10 @@ spec:
   ports:
     - port: 443
       targetPort: 8443
-      nodePort: 30001
+      nodePort: 30001  #定义要暴露端口
   selector:
     k8s-app: kubernetes-dashboard
-  type: NodePort
+  type: NodePort  #定义service类型
 
 ---
 
@@ -181,7 +181,6 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      k8s-app: kubernetes-dashboard
   template:
     metadata:
       labels:
@@ -200,6 +199,7 @@ spec:
           args:
             - --auto-generate-certificates
             - --namespace=kubernetes-dashboard
+            - --token-ttl=7200    #控制token过期时间
             # Uncomment the following line to manually specify Kubernetes API server Host
             # If not specified, Dashboard will attempt to auto discover the API server and connect
             # to it. Uncomment only if the default does not work.
